@@ -10,35 +10,13 @@ def parse_json(json_data):
         info_list = json_data['data']['info']
         # 确保info_list是一个列表并且有至少三个元素
         if isinstance(info_list, list) and len(info_list) >= 3:
-            results = []
+            results = ["下面是搜索结果"]
             # 遍历前三个元素
             for index, item in enumerate(info_list[:5]):
                 # 检查所需的字段是否存在
                 if 'content' in item and 'title' in item:
                     # 拼接title和content
-                    result = "【" + str(index) +"】"+ "title:" + item['title'] + "content: " + item['content']
-                    results.append(result)
-            # 将拼接的结果作为字符串返回
-            return "\n".join(results)
-        else:
-            return "Info list is not valid or does not have enough elements."
-    else:
-        return "JSON structure does not match expected format."
-
-# 假设这是您提供的解析JSON的函数
-def parse_json_to_url(json_data):
-    # 首先检查是否存在所需的路径
-    if  'data' in json_data and 'info' in json_data['data']:
-        info_list = json_data['data']['info']
-        # 确保info_list是一个列表并且有至少三个元素
-        if isinstance(info_list, list) and len(info_list) >= 3:
-            results = []
-            # 遍历前三个元素
-            for index, item in enumerate(info_list[:6]):
-                # 检查所需的字段是否存在
-                if 'content' in item and 'title' in item:
-                    # 拼接title和content
-                    result = "下面是搜索结果【" + str(index) +"】"+ "title:" + item['title'] + "content: " + item['content']
+                    result = "【" + str(index + 1) +"】"+ "title:" + item['title'] + "content: " + item['content']
                     results.append(result)
             # 将拼接的结果作为字符串返回
             return "\n".join(results)
