@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 import requests
 import json
+import html2text
 
 app = FastAPI()
 
@@ -53,6 +54,15 @@ def parse_json2(json_data):
     else:
         return "JSON structure does not match expected format."
 
+def get_html_content(url):
+    response = requests.get(url)
+    html_content = response.text
+
+    h = html2text.HTML2Text()
+
+    md_content = h.handle(html_content)
+
+    return md_content
 
 @app.get("/")
 async def get_main():
@@ -71,6 +81,18 @@ async def search(query: str):
     except requests.RequestException as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+@app.get("/get_detail/")
+async def search(url: str):
+    # url = "https://t.aliyun.com/abs/search/searchHelpDocv?queryWord={}&limit=20&pageNo=1&from=pc&categoryId=&loc=search_helpdoc_item".format(query)
+    try:
+        # response = requests.get(url)
+        # response.raise_for_status()  # 确保请求成功
+        # json_data = response.json()
+        # result = parse_json2(json_data)
+        result = get_html_content(url)
+        return result
+    except requests.RequestException as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 # @app.get("/searchDetail/")
 # async def search(query: str):

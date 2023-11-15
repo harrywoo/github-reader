@@ -3,3 +3,4 @@ gitpython
 pydantic
 uvicorn
 requests
+html2text
