@@ -3,4 +3,3 @@ gitpython
 pydantic
 uvicorn
 requests
-json
